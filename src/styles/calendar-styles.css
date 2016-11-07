@@ -35,7 +35,7 @@ body {
     -webkit-box-shadow: inset 0px 0px 20px black;
     -moz-box-shadow: inset 0px 0px 20px black;
     box-shadow: inset 0px 0px 20px black;
-    margin: 40px;
+    margin: 30px 40px;
 }
 
 .card {
