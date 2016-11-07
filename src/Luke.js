@@ -11,10 +11,11 @@ class Luke extends Component {
         super();
         this.openLuke = this.openLuke.bind(this);
         this.state = {
-            isOpen: 0
+            isOpen: 0,
+            bgPos: 0
         }
     }
-
+t
     openLuke(){
         if(this.state.isOpen === 1){
             cardClass = 'card';
@@ -30,12 +31,26 @@ class Luke extends Component {
 
         }
     }
+     componentDidMount(){
+         let boxOffset = `-${document.getElementById(this.props.id).offsetLeft+1}px -${document.getElementById(this.props.id).offsetTop+1}px`;
+         this.setState({
+             bgPos: boxOffset
+         });
+         window.addEventListener('resize', () => {
+             let boxOffset = `-${document.getElementById(this.props.id).offsetLeft+1}px -${document.getElementById(this.props.id).offsetTop+1}px`;
+             this.setState({
+                 bgPos: boxOffset
+             });
+             console.log('Redraw!');
+         });
+     }
 
     render(){
+        let containerDiv = `window-container pos-${this.props.number}`;
         return(
-            <div className="window-container" onClick={this.openLuke}>
+            <div className={containerDiv} onClick={this.openLuke} id={this.props.id}>
                 <div className={cardClass}>
-                    <div className={frontClass}>1</div>
+                    <div className={frontClass} style={{'backgroundPosition': this.state.bgPos}}>{this.props.number}</div>
                     <div className={backClass}>'Wrap your presents well.'</div>
                 </div>
             </div>
