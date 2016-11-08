@@ -1,22 +1,23 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import './styles/calendar-styles.css';
 
 let cardClass = 'card';
 let frontClass = 'face front';
 let backClass = 'face back';
 
-class Luke extends Component {
+class Door extends Component {
 
     constructor(){
         super();
-        this.openLuke = this.openLuke.bind(this);
+        this.openDoor = this.openDoor.bind(this);
         this.state = {
             isOpen: 0,
             bgPos: 0
         }
     }
-t
-    openLuke(){
+
+    openDoor(){
         if(this.state.isOpen === 1){
             cardClass = 'card';
             this.setState({
@@ -41,21 +42,25 @@ t
              this.setState({
                  bgPos: boxOffset
              });
-             console.log('Redraw!');
          });
      }
 
     render(){
+        let doorQuote = this.props.doordata ? this.props.doordata.quote  : 'Nothing yet.' ;
         let containerDiv = `window-container pos-${this.props.number}`;
         return(
-            <div className={containerDiv} onClick={this.openLuke} id={this.props.id}>
+            <div className={containerDiv} onClick={this.openDoor} id={this.props.id}>
                 <div className={cardClass}>
                     <div className={frontClass} style={{'backgroundPosition': this.state.bgPos}}>{this.props.number}</div>
-                    <div className={backClass}>'Wrap your presents well.'</div>
+                    <div className={backClass}>{doorQuote}</div>
                 </div>
             </div>
         )
     }
 }
-
-export default Luke;
+function mapStateToProps(state, ownProps){
+    return {
+        doordata: state.calendar["door_"+ownProps.number]
+    }
+}
+export default connect(mapStateToProps)(Door);
